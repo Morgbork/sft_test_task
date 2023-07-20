@@ -5,7 +5,7 @@ Test task for "СФТ" company.
 To get all unique producers ids from contract id use the following uri:
 
 ```
-/shop/producers-ids/{contract_id}/
+/contracts/<int:contract_id>/producers/
 ```
 
 ## System requirements
