@@ -1,6 +1,7 @@
 import pytest
 from django.urls import reverse
-from shop.models import CreditRequest, Producer, Product, Contract
+
+from shop.models import Contract, CreditRequest, Producer, Product
 
 
 @pytest.mark.django_db
@@ -16,17 +17,17 @@ def test_producers_from_credit_request_view(client):
     credit_request_2 = CreditRequest.objects.create(contract=contract_2)
 
     products = [
-        {'producer': producer_1, 'credit_request': credit_request_1},
-        {'producer': producer_2, 'credit_request': credit_request_1},
-        {'producer': producer_1, 'credit_request': credit_request_2},
-        {'producer': producer_2, 'credit_request': credit_request_2},
-        {'producer': producer_3, 'credit_request': credit_request_1},
+        {"producer": producer_1, "credit_request": credit_request_1},
+        {"producer": producer_2, "credit_request": credit_request_1},
+        {"producer": producer_1, "credit_request": credit_request_2},
+        {"producer": producer_2, "credit_request": credit_request_2},
+        {"producer": producer_3, "credit_request": credit_request_1},
     ]
 
     for product in products:
         Product.objects.create(**product)
 
-    url = reverse('producers-ids', args=[credit_request_1.id])
+    url = reverse("producers-ids", args=[credit_request_1.id])
     response = client.get(url)
 
     assert response.status_code == 200
@@ -35,7 +36,7 @@ def test_producers_from_credit_request_view(client):
     assert response.json() == expected_data
 
     # Test not existing credit request;
-    url = reverse('producers-ids', args=[0])
+    url = reverse("producers-ids", args=[0])
     response = client.get(url)
 
     assert response.status_code == 200
